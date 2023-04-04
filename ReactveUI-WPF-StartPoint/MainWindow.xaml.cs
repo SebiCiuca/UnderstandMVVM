@@ -18,7 +18,15 @@ namespace ReactveUI_WPF_StartPoint
 
             this.WhenActivated(cleanup =>
             {
-                //this.BindCommand(ViewModel, vm => vm.RandonListCommand, view => view.RandomButton).DisposeWith(cleanup);
+                MetricUnits.DataContext = ViewModel.CalibrationProperties.MetricUnits;
+                AmperUnits.DataContext = ViewModel.CalibrationProperties.AmperUnits;
+                VoltageUnits.DataContext = ViewModel.CalibrationProperties.VoltageUnits;
+                PixUnits.DataContext = ViewModel.CalibrationProperties.PixelUnits;
+
+                this.Bind(ViewModel,
+                          vm => vm.CalibrationProperties.SelectedMeasurementUnit,
+                          v => v.MeasurementUnitComboBoxGallery.SelectedItem)
+                    .DisposeWith(cleanup);
             });
         }
     }

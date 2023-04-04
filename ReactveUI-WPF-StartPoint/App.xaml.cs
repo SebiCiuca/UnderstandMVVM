@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
+using ReactiveUI_WPF_StartPoint.ViewModels.Managers;
+using ReactiveUI_WPF_StartPoint.ViewModels.Navigation;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,9 @@ namespace ReactveUI_WPF_StartPoint
         {
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainWindow>();
+
+            services.AddSingleton<ICalibrationProperties, CalibrationProperties>();
+            services.AddSingleton<ICalibrationManager, CalibrationManager>();
         }
     }
 }

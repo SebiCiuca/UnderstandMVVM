@@ -10,6 +10,69 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Ribbon>
+            <RibbonTab>
+                <RibbonGroup>
+                <RibbonComboBox x:Name="MeasurementUnitComboBox"
+                                        Margin="0,7,0,0"
+                                        SelectionBoxWidth="35">                  
+                    <RibbonGallery x:Name="MeasurementUnitComboBoxGallery"
+                                    SelectedItem="{Binding XPath=.}">
+                        <RibbonGalleryCategory  
+                                        x:Name="PixUnits"
+                                        Header="Pix"
+                                        MinColumnCount="5"
+                                        MaxColumnCount="5" 
+                                        ItemsSource="{Binding}">
+                            <RibbonGalleryCategory.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ShortName}"></TextBlock>
+                                </DataTemplate>
+                            </RibbonGalleryCategory.ItemTemplate>
+                        </RibbonGalleryCategory>
+                        <RibbonSeparator/>
+                        <RibbonGalleryCategory 
+                                        x:Name="MetricUnits" 
+                                        Header="Metric"
+                                        MinColumnCount="5"
+                                        MaxColumnCount="5" 
+                                        ItemsSource="{Binding}">
+                            <RibbonGalleryCategory.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ShortName}"></TextBlock>
+                                </DataTemplate>
+                            </RibbonGalleryCategory.ItemTemplate>
+                        </RibbonGalleryCategory>
+                        <Separator/>
+                        <RibbonGalleryCategory  
+                                        x:Name="AmperUnits" 
+                                        Header="Amper"
+                                        MinColumnCount="5"
+                                        MaxColumnCount="5" 
+                                        ItemsSource="{Binding}">
+                            <RibbonGalleryCategory.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ShortName}"></TextBlock>
+                                </DataTemplate>
+                            </RibbonGalleryCategory.ItemTemplate>
+                        </RibbonGalleryCategory>
+                        <Separator/>
+                        <RibbonGalleryCategory  
+                                        x:Name="VoltageUnits"
+                                        Header="Volt"
+                                        MinColumnCount="5"
+                                        MaxColumnCount="5" 
+                                        ItemsSource="{Binding}">
+                            <RibbonGalleryCategory.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ShortName}"></TextBlock>
+                                </DataTemplate>
+                            </RibbonGalleryCategory.ItemTemplate>
+                        </RibbonGalleryCategory>
+                    </RibbonGallery>
+                    </RibbonComboBox>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
     </Grid>
 </reactiveui:ReactiveWindow>
