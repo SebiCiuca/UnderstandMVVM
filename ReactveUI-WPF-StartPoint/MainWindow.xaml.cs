@@ -1,32 +1,51 @@
 ﻿using System.Reactive.Disposables;
+using System;
 using ReactiveUI;
+using System.Diagnostics;
+using System.Reactive.Linq;
+using ReactiveUI_WPF_StartPoint.ViewModels.Navigation;
+using Splat;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ReactveUI_WPF_StartPoint
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
-    {
-        public MainWindow(MainWindowViewModel mainWindowViewModel)
+    public class ReactiveMainWindow : ReactiveWindow<MainWindowViewModel> { }
+
+	public partial class MainWindow : ReactiveMainWindow
+	{
+        public MainWindow()
         {
             InitializeComponent();
             
-            ViewModel = mainWindowViewModel;
-
-            DataContextChanged += (sender, args) => ViewModel = DataContext as MainWindowViewModel;
+            ViewModel = App.ServiceProvider.GetRequiredService<MainWindowViewModel>();
 
             this.WhenActivated(cleanup =>
             {
-                MetricUnits.DataContext = ViewModel.CalibrationProperties.MetricUnits;
-                AmperUnits.DataContext = ViewModel.CalibrationProperties.AmperUnits;
-                VoltageUnits.DataContext = ViewModel.CalibrationProperties.VoltageUnits;
-                PixUnits.DataContext = ViewModel.CalibrationProperties.PixelUnits;
+                this.OneWayBind(ViewModel,
+                    vm => vm.CalibrationProperties.MetricUnits,
+                    v => v.MetricUnits.ItemsSource);
+                this.OneWayBind(ViewModel,
+                    vm => vm.CalibrationProperties.AmperUnits,
+                    v => v.AmperUnits.ItemsSource);
+                this.OneWayBind(ViewModel,
+                    vm => vm.CalibrationProperties.VoltageUnits,
+                    v => v.VoltageUnits.ItemsSource);
+                this.OneWayBind(ViewModel,
+                    vm => vm.CalibrationProperties.PixelUnits,
+                    v => v.PixUnits.ItemsSource);
 
                 this.Bind(ViewModel,
                           vm => vm.CalibrationProperties.SelectedMeasurementUnit,
                           v => v.MeasurementUnitComboBoxGallery.SelectedItem)
                     .DisposeWith(cleanup);
+
+                this.WhenAnyValue(x => x.ViewModel.CalibrationProperties.SelectedMeasurementUnit)
+					.WhereNotNull()
+					.Subscribe(x=> Debug.WriteLine(x.ShortName));
+                this.WhenAnyValue(x => x.MeasurementUnitComboBoxGallery.SelectedItem)
+                    .WhereNotNull()
+                    .Select(s=> (UnitModel)s)
+                    .Subscribe(x=> Debug.WriteLine(x.ShortName));
             });
         }
     }
