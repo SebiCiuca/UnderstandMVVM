@@ -23,18 +23,22 @@ namespace ReactveUI_WPF_StartPoint
             {
                 this.OneWayBind(ViewModel,
                     vm => vm.CalibrationProperties.MetricUnits,
-                    v => v.MetricUnits.ItemsSource);
-                this.OneWayBind(ViewModel,
+                    v => v.MetricUnits.ItemsSource)
+					.DisposeWith(cleanup);
+				this.OneWayBind(ViewModel,
                     vm => vm.CalibrationProperties.AmperUnits,
-                    v => v.AmperUnits.ItemsSource);
-                this.OneWayBind(ViewModel,
+                    v => v.AmperUnits.ItemsSource)
+					.DisposeWith(cleanup);
+				this.OneWayBind(ViewModel,
                     vm => vm.CalibrationProperties.VoltageUnits,
-                    v => v.VoltageUnits.ItemsSource);
-                this.OneWayBind(ViewModel,
+                    v => v.VoltageUnits.ItemsSource)
+					.DisposeWith(cleanup);
+				this.OneWayBind(ViewModel,
                     vm => vm.CalibrationProperties.PixelUnits,
-                    v => v.PixUnits.ItemsSource);
+                    v => v.PixUnits.ItemsSource)
+					.DisposeWith(cleanup);
 
-                this.Bind(ViewModel,
+				this.Bind(ViewModel,
                           vm => vm.CalibrationProperties.SelectedMeasurementUnit,
                           v => v.MeasurementUnitComboBoxGallery.SelectedItem)
                     .DisposeWith(cleanup);
